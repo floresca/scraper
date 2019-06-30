@@ -1,0 +1,95 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<ScraperFront.Models.Stock>
+
+@{
+    ViewBag.Title = "StockData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Stock Data</h2>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by ticker: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" class="btn btn-default" /> 
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Ticker", "About", new {sortBy = ViewBag.SortTickerParameter, SearchString = Request.QueryString["SearchString"], Search = Request.QueryString["Search"] })
+        </th>
+        <th>
+            Stock Price
+        </th>
+        <th>
+            Price Change
+        </th>
+        <th>
+            Price Percent Change
+        </th>
+        <th>
+            Trade Volume
+        </th>
+        <th>
+            Market Cap
+        </th>
+        <th>
+            @Html.ActionLink("Date", "About", new { sortBy = ViewBag.SortDateParameter, SearchString = Request.QueryString["SearchString"], Search = Request.QueryString["Search"] })
+        </th>
+
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td>This ticker is not available in the database</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ticker)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stock_Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price_Change)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price_Percent_Change)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Trade_Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Market_Cap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScrapeDateTime)
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("About", new { page, SearchString = Request.QueryString["SearchString"], Search = Request.QueryString["Search"], sortBy = Request["sortBy"]}))
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <button type="button" class="btn btn-default">@Html.ActionLink("Click here to scrape new results", "Scrape")</button>
+        </p>
+    </div>
+</form>
+

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="yahooStocksDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Stocks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="Ticker" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Stock Price" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price Change" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price Percent Change" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Trade Volume" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Market Cap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ScrapeDateTime" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Stocks_Stocks">
+          <End Role="Stocks" Type="Self.Stocks" Multiplicity="1" />
+          <End Role="Stocks1" Type="Self.Stocks" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Stocks1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="yahooStocksDataModelStoreContainer">
+          <EntitySet Name="Stocks" EntityType="Self.Stocks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Stocks_Stocks" Association="Self.FK_Stocks_Stocks">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="Stocks1" EntitySet="Stocks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="yahooStocksDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="Ticker" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Stock_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price_Change" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price_Percent_Change" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Trade_Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Market_Cap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ScrapeDateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Stocks1" Relationship="Self.FK_Stocks_Stocks" FromRole="Stocks" ToRole="Stocks1" />
+          <NavigationProperty Name="Stock1" Relationship="Self.FK_Stocks_Stocks" FromRole="Stocks1" ToRole="Stocks" />
+        </EntityType>
+        <Association Name="FK_Stocks_Stocks">
+          <End Role="Stocks" Type="Self.Stock" Multiplicity="1" />
+          <End Role="Stocks1" Type="Self.Stock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Stocks">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Stocks1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="yahooStocksDataEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Stocks" EntityType="Self.Stock" />
+          <AssociationSet Name="FK_Stocks_Stocks" Association="Self.FK_Stocks_Stocks">
+            <End Role="Stocks" EntitySet="Stocks" />
+            <End Role="Stocks1" EntitySet="Stocks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="yahooStocksDataModelStoreContainer" CdmEntityContainer="yahooStocksDataEntities1">
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="yahooStocksDataModel.Stock">
+              <MappingFragment StoreEntitySet="Stocks">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="Stock_Price" ColumnName="Stock Price" />
+                <ScalarProperty Name="Price_Change" ColumnName="Price Change" />
+                <ScalarProperty Name="Price_Percent_Change" ColumnName="Price Percent Change" />
+                <ScalarProperty Name="Trade_Volume" ColumnName="Trade Volume" />
+                <ScalarProperty Name="Market_Cap" ColumnName="Market Cap" />
+                <ScalarProperty Name="ScrapeDateTime" ColumnName="ScrapeDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
