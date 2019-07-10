@@ -8,7 +8,7 @@ namespace ScraperFront.gitignore
     public class Auth
     {
         public string userName = "floresc.andres@gmail.com";
-        public string password = "TMG72gyS";
+        public string password = "$CRAPE123";
     }
 }
 
